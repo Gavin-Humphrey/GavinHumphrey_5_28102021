@@ -22,8 +22,8 @@ fetch('http://localhost:3000/api/products/'+id)
     selectionProductImage.innerHTML += `
     <img src="${product.imageUrl}" alt="${product.name}">`;
 
-    const selectionProducttitle = document.getElementById("title");
-    selectionProducttitle.innerHTML += `
+    const selectionProductTitle = document.getElementById("title");
+    selectionProductTitle.innerHTML += `
       ${product.name}
 `;
           const selectionProductPrice = document.getElementById("price");
