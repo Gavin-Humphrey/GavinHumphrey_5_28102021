@@ -14,8 +14,8 @@ const displayCartContent = async () => {
     let totalPrice = 0;
     //Ont parcour toute les element dans local storage
     const productsEl = cartContent.forEach(productCart => { 
-    //Calculer le prix totla en function de nombre d'article
-    const productDetails= allProducts.find(product => product._id === productCart.idOfProduct);
+    //Calculer le prix total en function de nombre d'article
+    const productDetails = allProducts.find(product => product._id === productCart.idOfProduct);
     totalPrice += productDetails.price * productCart.quantityOfProduct;
    
     //Reconstruite dynamiquement le DOM
@@ -109,3 +109,111 @@ const displayCartContent = async () => {
         removeAllChildNodes(sectionEl);
         displayCartContent();
         }
+
+        //Form validation
+        
+        function getForm() {
+            let form = document.querySelector(".cart__order__form");
+
+    //Créer des expressions
+            
+            var firstName = document.getElementById("firstName").value;
+            var lastName = document.getElementById("lastName").value;
+            var address = document.getElementById("address").value;
+            var city = document.getElementById("city").value;
+            var email = document.getElementById("email").value;
+
+            let firstNameRGEX = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
+            let lastNameRGEX = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
+            let addressRGEX = new RegExp(/^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+/);
+            let cityRGEX = new RegExp(/^[a-zA-Z',.\s-]{1,25}$/);
+            let emailRGEX = new RegExp(/^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/);
+  
+             // Ecoute de modif du prénom
+    form.firstName.addEventListener('change', function() {
+        validFirstName(this);
+    });
+
+    // Ecoute de modif du prénom
+    form.lastName.addEventListener('change', function() {
+        validLastName(this);
+    });
+
+    // Ecoute de modif du prénom
+    form.address.addEventListener('change', function() {
+        validAddress(this);
+    });
+
+    // Ecoute de modif du prénom
+    form.city.addEventListener('change', function() {
+        validCity(this);
+    });
+
+    // Ecoute de modif du prénom
+    form.email.addEventListener('change', function() {
+        validEmail(this);
+    });
+
+            const validFirstName = function(inputFirstName) {
+                let firstNameErrorMsg = inputFirstName.nextElementSibling;
+    
+            if (firstNameRGEX.test(inputFirstName.value)) {
+                firstNameErrorMsg.innerHTML = '';
+            } else {
+                firstNameErrorMsg.innerHTML = 'Please enter a valid first name';
+            }
+            }
+
+            const validLastName = function(inputLastName) {
+                let lastNameErrorMsg = inputLastName.nextElementSibling;
+        
+            if (lastNameRGEX.test(inputLastName.value)) { 
+                lastNameErrorMsg.innerHTML = '';
+            } else {
+                lastNameErrorMsg.innerHTML = 'Please enter a valid last name';
+            }
+            }
+            
+            const validAddress = function(inputAddress) {
+                let addressErrorMsg = inputAddress.nextElementSibling;
+
+            if (addressRGEX.test(inputAddress.value)) {
+                addressErrorMsg.innerHTML = '';
+            } else {
+                addressErrorMsg.innerHTML = 'Please enter a valid address';
+            }
+            }
+
+            const validCity = function(inputCity) {
+                let cityErrorMsg = inputCity.nextElementSibling;
+
+            if (cityRGEX.test(inputCity.value)) {
+                cityErrorMsg.innerHTML = '';
+            } else {
+                cityErrorMsg.innerHTML = 'Please enter a valid city';
+            }
+            }
+
+            const validEmail = function(inputEmail) {
+                let emailErrorMsg = inputEmail.nextElementSibling;
+
+            if (emailRGEX.test(inputEmail.value)) {
+                emailErrorMsg.innerHTML = '';
+            }else {
+                emailErrorMsg.innerHTML = 'Please enter a valid email';
+            }
+        };
+        }
+        
+            getForm();
+
+
+
+        
+        
+        
+
+
+   
+         
+          
