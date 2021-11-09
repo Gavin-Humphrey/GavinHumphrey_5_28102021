@@ -129,32 +129,30 @@ const displayCartContent = async () => {
             let cityRGEX = new RegExp(/^[a-zA-Z',.\s-]{1,25}$/);
             let emailRGEX = new RegExp(/^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/);
   
-             // Ecoute de modif du prénom
+      // Debut d'ecoute de modif du form
+
     form.firstName.addEventListener('change', function() {
-        validFirstName(this);
+        firstNameValid(this);
     });
 
-    // Ecoute de modif du prénom
     form.lastName.addEventListener('change', function() {
-        validLastName(this);
+        lastNameValid(this);
     });
 
-    // Ecoute de modif du prénom
     form.address.addEventListener('change', function() {
-        validAddress(this);
+        addressValid(this);
     });
 
-    // Ecoute de modif du prénom
     form.city.addEventListener('change', function() {
-        validCity(this);
+        cityValid(this);
     });
 
-    // Ecoute de modif du prénom
     form.email.addEventListener('change', function() {
-        validEmail(this);
+        emailValid(this);
     });
+    //Fin d'ecoute de modif du form
 
-            const validFirstName = function(inputFirstName) {
+            const firstNameValid = function(inputFirstName) {
                 let firstNameErrorMsg = inputFirstName.nextElementSibling;
     
             if (firstNameRGEX.test(inputFirstName.value)) {
@@ -164,7 +162,7 @@ const displayCartContent = async () => {
             }
             }
 
-            const validLastName = function(inputLastName) {
+            const lastNameValid = function(inputLastName) {
                 let lastNameErrorMsg = inputLastName.nextElementSibling;
         
             if (lastNameRGEX.test(inputLastName.value)) { 
@@ -174,7 +172,7 @@ const displayCartContent = async () => {
             }
             }
             
-            const validAddress = function(inputAddress) {
+            const addressValid = function(inputAddress) {
                 let addressErrorMsg = inputAddress.nextElementSibling;
 
             if (addressRGEX.test(inputAddress.value)) {
@@ -184,7 +182,7 @@ const displayCartContent = async () => {
             }
             }
 
-            const validCity = function(inputCity) {
+            const cityValid = function(inputCity) {
                 let cityErrorMsg = inputCity.nextElementSibling;
 
             if (cityRGEX.test(inputCity.value)) {
@@ -194,7 +192,7 @@ const displayCartContent = async () => {
             }
             }
 
-            const validEmail = function(inputEmail) {
+            const emailValid = function(inputEmail) {
                 let emailErrorMsg = inputEmail.nextElementSibling;
 
             if (emailRGEX.test(inputEmail.value)) {
