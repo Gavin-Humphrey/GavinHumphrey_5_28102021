@@ -40,26 +40,20 @@ fetch('http://localhost:3000/api/products/'+id)
     displayColors(product);
     }
    
-   
  //cette fonction, parcour la liste de couleurs de ce produits et les affiches dans un element HTML de type <option> 
     function displayColors(product) {
         const colorsChoice = document.getElementById("colors");
         for (let colors of product.colors) {
-            colorsChoice.innerHTML += `<option value="${colors}">${colors}</option>`;
-            
+            colorsChoice.innerHTML += `<option value="${colors}">${colors}</option>`;  
         }
     }
       addToCart(item);   
-    
-
- //temporary
     
  const quantityPicked = document.querySelector("#quantity");
  const colorPicked = document. querySelector("#colors");
  
  function addToCart(item) {
  const btn_envoyerPanier = document.querySelector("#addToCart");
- 
  
     //Pour écouter la condition de quantité 1 -100 et de couleur non nulle
     btn_envoyerPanier.addEventListener("click", (event) => {
@@ -81,7 +75,6 @@ fetch('http://localhost:3000/api/products/'+id)
         priceOfProduct: product.price,
         imgOfProduct: product.imageUrl
     }; 
-      
       addToCart(item); 
     
     //Initialiser le local storage
