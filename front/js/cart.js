@@ -1,12 +1,9 @@
 //Initialiser le localStorage
 const allProductsURL = 'http://localhost:3000/api/products';
 const data = fetch(allProductsURL).then(response => response.json());
-console.log(allProductsURL);
 const sectionEl = document.querySelector('#cart__items');
 const totalQuantity_DOM = document.querySelector('#totalQuantity'); 
 const totalPrice_DOM = document.querySelector('#totalPrice');
-
-
 
 //Afficher le recap de produit selectionées
     const displayCartContent = async () => {
@@ -169,7 +166,7 @@ const totalPrice_DOM = document.querySelector('#totalPrice');
         cityErrorMsg.innerHTML = 'Veuillez remplir ce champ correctement';
     }
     }
-
+    
     const emailValid = function(inputEmail) {
         let emailErrorMsg = inputEmail.nextElementSibling;
 
