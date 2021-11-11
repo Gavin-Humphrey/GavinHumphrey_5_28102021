@@ -47,7 +47,7 @@ fetch('http://localhost:3000/api/products/'+id)
             colorsChoice.innerHTML += `<option value="${colors}">${colors}</option>`;  
         }
     }
-      addToCart(item);   
+    addToCart(item);   
     
  const quantityPicked = document.querySelector("#quantity");
  const colorPicked = document. querySelector("#colors");
@@ -75,7 +75,7 @@ fetch('http://localhost:3000/api/products/'+id)
         priceOfProduct: product.price,
         imgOfProduct: product.imageUrl
     }; 
-      addToCart(item); 
+    addToCart(item); 
     
     //Initialiser le local storage
     let localStorageProduct = JSON.parse(localStorage.getItem("product"));
