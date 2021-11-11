@@ -223,6 +223,7 @@ handleForm = () => {
             email: inputEmail.value
         };
         
+        //Ces conditions doivent être remplies avant que la commande ne soit acceptée. 
         if(isProductsInCart && inputFirstName.value && inputLastName.value
         && inputAddress.value && inputCity.value && inputEmail.value) {
             localStorage.setItem('contact', JSON.stringify(contact));

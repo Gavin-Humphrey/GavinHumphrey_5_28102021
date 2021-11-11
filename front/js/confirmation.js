@@ -6,6 +6,8 @@ const postOrder = async () => {
     const productsId = products.map(el => {
         return el.idOfProduct
     }); 
+
+    //Ici, nous effectuons une requête POST sur l'API et récupérons l'identifiant de la commande dans la réponse. 
     const orderId_DOM = document.querySelector('#orderId');
     const confirmation_DOM = document.querySelector('.confirmation');
     const rawResponse = await fetch(orderURL_API, {
