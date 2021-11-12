@@ -110,72 +110,75 @@ const totalPrice_DOM = document.querySelector('#totalPrice');
     }
 
     //Form validation
-    function getForm() {
+    const errorsArray = [];
+    function checkForm() {
+     errorsArray.length = 0; 
+
         let form = document.querySelector(".cart__order__form");
 
-        var firstName = document.getElementById("firstName").value;
-        var lastName = document.getElementById("lastName").value;
-        var address = document.getElementById("address").value;
-        var city = document.getElementById("city").value;
-        var email = document.getElementById("email").value;
-
         //Créer des expressions régulières Regex
-        let firstNameRGEX = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
-        let lastNameRGEX = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
-        let addressRGEX = new RegExp(/^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+/);
-        let cityRGEX = new RegExp(/^[a-zA-Z',.\s-]{1,25}$/);
-        let emailRGEX = new RegExp(/^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/);
+        let firstNameRegEx = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
+        let lastNameRegEx = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
+        let addressRegEx = new RegExp(/^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+/);
+        let cityRegEx = new RegExp(/^[a-zA-Z',.\s-]{1,25}$/);
+        let emailRegEx = new RegExp(/^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/);
 
-// la vérification des données via des Regex.
+// la vérification des données avec Regex.
     const firstNameValid = function(inputFirstName) {
         let firstNameErrorMsg = inputFirstName.nextElementSibling;
 
-    if (firstNameRGEX.test(inputFirstName.value)) {
+    if (firstNameRegEx.test(inputFirstName.value)) {
         firstNameErrorMsg.innerHTML = '';
     } else {
         firstNameErrorMsg.innerHTML = 'Veuillez remplir ce champ correctement';
+        errorsArray.push(firstNameErrorMsg);
     }
     }
 
     const lastNameValid = function(inputLastName) {
         let lastNameErrorMsg = inputLastName.nextElementSibling;
 
-    if (lastNameRGEX.test(inputLastName.value)) { 
+    if (lastNameRegEx.test(inputLastName.value)) { 
         lastNameErrorMsg.innerHTML = '';
     } else {
         lastNameErrorMsg.innerHTML = 'Veuillez remplir ce champ correctement';
+        errorsArray.push(lastNameErrorMsg);
     }
     }
 
     const addressValid = function(inputAddress) {
         let addressErrorMsg = inputAddress.nextElementSibling;
 
-    if (addressRGEX.test(inputAddress.value)) {
+    if (addressRegEx.test(inputAddress.value)) {
         addressErrorMsg.innerHTML = '';
     } else {
         addressErrorMsg.innerHTML = 'Veuillez remplir ce champ correctement';
+        errorsArray.push(addressErrorMsg);
     }
     }
 
     const cityValid = function(inputCity) {
         let cityErrorMsg = inputCity.nextElementSibling;
 
-    if (cityRGEX.test(inputCity.value)) {
+    if (cityRegEx.test(inputCity.value)) {
         cityErrorMsg.innerHTML = '';
     } else {
         cityErrorMsg.innerHTML = 'Veuillez remplir ce champ correctement';
+        errorsArray.push(cityErrorMsg);
     }
     }
     
     const emailValid = function(inputEmail) {
         let emailErrorMsg = inputEmail.nextElementSibling;
 
-    if (emailRGEX.test(inputEmail.value)) {
+    if (emailRegEx.test(inputEmail.value)) {
         emailErrorMsg.innerHTML = '';
     }else {
         emailErrorMsg.innerHTML = 'Veuillez remplir ce champ correctement';
+        errorsArray.push(emailErrorMsg);
     }
     };
+
 
     // Debut d'ecoute de modif du form
     form.firstName.addEventListener('change', function() {
@@ -199,22 +202,22 @@ const totalPrice_DOM = document.querySelector('#totalPrice');
     });
 //Fin d'ecoute de modif du form.
 }
-getForm();
+checkForm();
 
 const orderURL_page = 'confirmation.html';
-var inputFirstName = document.getElementById('firstName');
-var inputLastName = document.getElementById('lastName');
-var inputAddress = document.getElementById('address');
-var inputCity = document.getElementById('city');
-var inputEmail = document.getElementById('email');
+
+let inputFirstName = document.getElementById('firstName');
+let inputLastName = document.getElementById('lastName');
+let inputAddress = document.getElementById('address');
+let inputCity = document.getElementById('city');
+let inputEmail = document.getElementById('email');
 
 handleForm = () => {
     order.addEventListener('click', (e) => {
 
         const isProductsInCart = (localStorage.getItem('product') || []).length;
         e.preventDefault();
-        getForm();
-        
+        checkForm();
         const contact = {
             firstName: inputFirstName.value,
             lastName: inputLastName.value,
@@ -224,7 +227,7 @@ handleForm = () => {
         };
         
         //Ces conditions doivent être remplies avant que la commande ne soit acceptée. 
-        if(isProductsInCart && inputFirstName.value && inputLastName.value
+        if(!errorsArray.length > 0 && isProductsInCart && inputFirstName.value && inputLastName.value
         && inputAddress.value && inputCity.value && inputEmail.value) {
             localStorage.setItem('contact', JSON.stringify(contact));
             window.location.replace(orderURL_page);
