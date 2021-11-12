@@ -110,111 +110,102 @@ const totalPrice_DOM = document.querySelector('#totalPrice');
     }
 
     //Form validation
-    const errorsArray = [];
-    function checkForm() {
-     errorsArray.length = 0; 
+    //Form validation
+const form = document.querySelector('.cart__order__form');
+const inputFirstName = document.querySelector('#firstName');
+const inputLastName = document.querySelector('#lastName');
+const inputAddress = document.querySelector('#address');
+const inputCity = document.querySelector('#city');
+const inputEmail = document.querySelector('#email');
+const allFormArray = [inputFirstName, inputLastName, inputAddress, inputCity, inputEmail];
+const errorsArray = [];
 
-        let form = document.querySelector(".cart__order__form");
-
-        //Créer des expressions régulières Regex
-        let firstNameRegEx = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
-        let lastNameRegEx = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
-        let addressRegEx = new RegExp(/^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+/);
-        let cityRegEx = new RegExp(/^[a-zA-Z',.\s-]{1,25}$/);
-        let emailRegEx = new RegExp(/^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/);
 
 // la vérification des données avec Regex.
-    const firstNameValid = function(inputFirstName) {
-        let firstNameErrorMsg = inputFirstName.nextElementSibling;
+const firstNameValid = (inputFirstName) => {
+    const firstNameRegEx = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
+    let firstNameErrorMsg = inputFirstName.nextElementSibling;
 
     if (firstNameRegEx.test(inputFirstName.value)) {
         firstNameErrorMsg.innerHTML = '';
     } else {
         firstNameErrorMsg.innerHTML = 'Veuillez remplir ce champ correctement';
-        errorsArray.push(firstNameErrorMsg);
+        errorsArray.push('firstNameErrorMsg');
     }
-    }
+};
 
-    const lastNameValid = function(inputLastName) {
-        let lastNameErrorMsg = inputLastName.nextElementSibling;
+const lastNameValid = (inputLastName) => {
+const lastNameRegEx = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
+let lastNameErrorMsg = inputLastName.nextElementSibling;
 
-    if (lastNameRegEx.test(inputLastName.value)) { 
-        lastNameErrorMsg.innerHTML = '';
-    } else {
-        lastNameErrorMsg.innerHTML = 'Veuillez remplir ce champ correctement';
-        errorsArray.push(lastNameErrorMsg);
+if (lastNameRegEx.test(inputLastName.value)) {
+    lastNameErrorMsg.innerHTML = '';
+} else {
+    lastNameErrorMsg.innerHTML = 'Veuillez remplir ce champ correctement';
+    errorsArray.push('lastNameErrorMsg');
     }
-    }
+};
 
-    const addressValid = function(inputAddress) {
-        let addressErrorMsg = inputAddress.nextElementSibling;
+const addressValid = (inputAddress) => {
+    const addressRegEx = new RegExp(/^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+/);
+    let addressErrorMsg = inputAddress.nextElementSibling;
 
     if (addressRegEx.test(inputAddress.value)) {
         addressErrorMsg.innerHTML = '';
     } else {
         addressErrorMsg.innerHTML = 'Veuillez remplir ce champ correctement';
-        errorsArray.push(addressErrorMsg);
+        errorsArray.push('addressErrorMsg');
     }
-    }
+};
 
-    const cityValid = function(inputCity) {
-        let cityErrorMsg = inputCity.nextElementSibling;
+const cityValid = (inputCity) => {
+    const cityRegEx = new RegExp(/^[a-zA-Z',.\s-]{1,25}$/);
+    let cityErrorMsg = inputCity.nextElementSibling;
 
     if (cityRegEx.test(inputCity.value)) {
         cityErrorMsg.innerHTML = '';
     } else {
         cityErrorMsg.innerHTML = 'Veuillez remplir ce champ correctement';
-        errorsArray.push(cityErrorMsg);
+        errorsArray.push('cityErrorMsg');
     }
-    }
-    
-    const emailValid = function(inputEmail) {
-        let emailErrorMsg = inputEmail.nextElementSibling;
+};
+
+const emailValid = (inputEmail) => {
+    const emailRegEx = new RegExp(/^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/);
+    let emailErrorMsg = inputEmail.nextElementSibling;
 
     if (emailRegEx.test(inputEmail.value)) {
         emailErrorMsg.innerHTML = '';
-    }else {
+    } else {
         emailErrorMsg.innerHTML = 'Veuillez remplir ce champ correctement';
-        errorsArray.push(emailErrorMsg);
+        errorsArray.push('emailErrorMsg');
     }
-    };
+};
 
-
-    // Debut d'ecoute de modif du form
-    form.firstName.addEventListener('change', function() {
-        firstNameValid(this);
-    });
-
-    form.lastName.addEventListener('change', function() {
-        lastNameValid(this);
-    });
-
-    form.address.addEventListener('change', function() {
-        addressValid(this);
-    });
-
-    form.city.addEventListener('change', function() {
-        cityValid(this);
-    });
-
-    form.email.addEventListener('change', function() {
-        emailValid(this);
-    });
-//Fin d'ecoute de modif du form.
+function checkForm() {
+    errorsArray.length = 0;
+    firstNameValid(inputFirstName);
+    lastNameValid(inputLastName);
+    addressValid(inputAddress);
+    cityValid(inputCity);
+    emailValid(inputEmail);
 }
-checkForm();
+
+// Debut d'ecoute de modif du form
+allFormArray.forEach(el=>{
+    el.addEventListener('focus',() => checkForm());
+});
+form.addEventListener('keypress',() => checkForm());
+//Fin d'ecoute de modif du form.
 
 const orderURL_page = 'confirmation.html';
 
-let inputFirstName = document.getElementById('firstName');
-let inputLastName = document.getElementById('lastName');
-let inputAddress = document.getElementById('address');
-let inputCity = document.getElementById('city');
-let inputEmail = document.getElementById('email');
-
 handleForm = () => {
-    order.addEventListener('click', (e) => {
+    allFormArray.forEach(el=>{
+        document.querySelector(`#${el.name}ErrorMsg`).textContent = "";
+    });
 
+    order.addEventListener('click', (e) => {
         const isProductsInCart = (localStorage.getItem('product') || []).length;
         e.preventDefault();
         checkForm();
@@ -223,24 +214,18 @@ handleForm = () => {
             lastName: inputLastName.value,
             address: inputAddress.value,
             city: inputCity.value,
-            email: inputEmail.value
+            email: inputEmail.value,
         };
-        
-        //Ces conditions doivent être remplies avant que la commande ne soit acceptée. 
+
+        //Ces conditions doivent être remplies avant que la commande ne soit acceptée.
         if(!errorsArray.length > 0 && isProductsInCart && inputFirstName.value && inputLastName.value
-        && inputAddress.value && inputCity.value && inputEmail.value) {
+            && inputAddress.value && inputCity.value && inputEmail.value) {
             localStorage.setItem('contact', JSON.stringify(contact));
             window.location.replace(orderURL_page);
         }
-    })   
-    
-}
+    });
+};
 handleForm();
-                  
-
-
-
-
 
 
 
