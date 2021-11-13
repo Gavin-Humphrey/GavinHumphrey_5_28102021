@@ -1,3 +1,4 @@
+//Ici, nous effectuons une requête POST sur l'API et récupérons l'identifiant de la commande dans la réponse. 
 const orderURL_API = 'http://localhost:3000/api/products/order/';
 
 const postOrder = async () => {
@@ -7,7 +8,6 @@ const postOrder = async () => {
         return el.idOfProduct
     }); 
 
-    //Ici, nous effectuons une requête POST sur l'API et récupérons l'identifiant de la commande dans la réponse. 
     const orderId_DOM = document.querySelector('#orderId');
     const confirmation_DOM = document.querySelector('.confirmation');
     const rawResponse = await fetch(orderURL_API, {

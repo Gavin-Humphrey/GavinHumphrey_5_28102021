@@ -1,4 +1,5 @@
-fetch('http://localhost:3000/api/products')//Envoyer une requête pour récupérer les données au format json
+//Envoyer une requête pour récupérer les données au format json
+fetch('http://localhost:3000/api/products')
 .then(response => response.json())
 .then(data => console.log(data));
 

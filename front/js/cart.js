@@ -6,11 +6,11 @@ const totalQuantity_DOM = document.querySelector('#totalQuantity');
 const totalPrice_DOM = document.querySelector('#totalPrice');
 
 //Afficher le recap de produit selectionées
-    const displayCartContent = async () => {
-    const cartContent = JSON.parse(localStorage.getItem('product')) || [];//recouperer toutes dans local storage
-    const totalQuantity = cartContent.reduce((acc, curr) => acc + parseInt(curr.quantityOfProduct), 0);//Calculer le nombre the items dans local storage product
-    const allProducts = await data;
-    let totalPrice = 0;
+const displayCartContent = async () => {
+const cartContent = JSON.parse(localStorage.getItem('product')) || [];//recouperer toutes dans local storage
+const totalQuantity = cartContent.reduce((acc, curr) => acc + parseInt(curr.quantityOfProduct), 0);//Calculer le nombre the items dans local storage product
+const allProducts = await data;
+let totalPrice = 0;
 
     //On parcour toute les elements dans local storage
     const productsEl = cartContent.forEach(productCart => { 
@@ -49,7 +49,7 @@ const totalPrice_DOM = document.querySelector('#totalPrice');
 
     const allArticles_DOM= document.querySelectorAll('.cart__item');
 
-    /* Add events to change quantity and remove product */
+    //Ajouter events pour modifier la quantité et supprimer le produit  
     allArticles_DOM.forEach(el=>{
         const deleteItem_DOM = el.querySelector('.deleteItem');
         const idProductWithColor = el.dataset.id; 
@@ -68,50 +68,53 @@ const totalPrice_DOM = document.querySelector('#totalPrice');
     })
 }
 
+displayCartContent();
+
+const removeAllChildNodes= (parent) => {
+    while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+    }
+}
+
+//FUNCTION FILTER
+//Pour supprimer le produit au clic ; comparer les produits et supprimer les produits sélectionnés 
+const removeProduct = (idProductWithColor) => {
+    const cartContent = JSON.parse(localStorage.getItem('product'));
+    const newCartContent = cartContent.filter(el => `${el.idOfProduct}-${el.colorOfProduct}` !== idProductWithColor);
+    localStorage.setItem('product', JSON.stringify(newCartContent));
+    
+    //Pour supprimer les anciens produits de DOM
+    removeAllChildNodes(sectionEl);
+    
+    //Pour afficher le nouveau contenu du panier sans les produits supprimés. 
     displayCartContent();
+}
 
-    const removeAllChildNodes= (parent) => {
-        while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
+//Ajouter une nouvelle item en function de l'id et la couleur
+const handleQuantity = (newQuantity, idProductWithColor) => {
+    const cartContent = JSON.parse(localStorage.getItem('product'));
+    const newCartContent = cartContent.map(el=> {
+    const currentIdProductWithColor = `${el.idOfProduct}-${el.colorOfProduct}`;
+        console.log(currentIdProductWithColor);
+        if(currentIdProductWithColor === idProductWithColor){
+        const currentProductWithNewQuantity = {...el};
+        currentProductWithNewQuantity.quantityOfProduct = newQuantity;
+        return currentProductWithNewQuantity;
         }
-    }
+        return el;
+    });
+    
+    localStorage.setItem('product', JSON.stringify(newCartContent));
+    removeAllChildNodes(sectionEl);
+    displayCartContent();
+}
 
-    //FUNCTION FILTER
-    /* To remove product on click */  // Compare products and remove selected products
-    const removeProduct = (idProductWithColor) => {
-        const cartContent = JSON.parse(localStorage.getItem('product'));
-        const newCartContent = cartContent.filter(el => `${el.idOfProduct}-${el.colorOfProduct}` !== idProductWithColor);
-        localStorage.setItem('product', JSON.stringify(newCartContent));
-        
-        /* to remove old products from dom */
-        removeAllChildNodes(sectionEl);
-        
-        /* to show the new cart content whitout the product removed */
-        displayCartContent();
-    }
+  
 
-    //Ajouter une nouvelle item en function de l'id et la couleur
-    const handleQuantity = (newQuantity, idProductWithColor) => {
-        const cartContent = JSON.parse(localStorage.getItem('product'));
-        const newCartContent = cartContent.map(el=> {
-        const currentIdProductWithColor = `${el.idOfProduct}-${el.colorOfProduct}`;
-            console.log(currentIdProductWithColor);
-            if(currentIdProductWithColor === idProductWithColor){
-            const currentProductWithNewQuantity = {...el};
-            currentProductWithNewQuantity.quantityOfProduct = newQuantity;
-            return currentProductWithNewQuantity;
-            }
-            return el;
-        });
-        
-        localStorage.setItem('product', JSON.stringify(newCartContent));
-        removeAllChildNodes(sectionEl);
-        displayCartContent();
-    }
-
-    //Form validation
-    //Form validation
+//Validation du formulaire 
+const orderURLPage = 'confirmation.html';
 const form = document.querySelector('.cart__order__form');
+const orderButton = document.querySelector('#order');
 const inputFirstName = document.querySelector('#firstName');
 const inputLastName = document.querySelector('#lastName');
 const inputAddress = document.querySelector('#address');
@@ -120,11 +123,10 @@ const inputEmail = document.querySelector('#email');
 const allFormArray = [inputFirstName, inputLastName, inputAddress, inputCity, inputEmail];
 const errorsArray = [];
 
-
 // la vérification des données avec Regex.
 const firstNameValid = (inputFirstName) => {
-    const firstNameRegEx = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
-    let firstNameErrorMsg = inputFirstName.nextElementSibling;
+const firstNameRegEx = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
+let firstNameErrorMsg = inputFirstName.nextElementSibling;
 
     if (firstNameRegEx.test(inputFirstName.value)) {
         firstNameErrorMsg.innerHTML = '';
@@ -135,14 +137,14 @@ const firstNameValid = (inputFirstName) => {
 };
 
 const lastNameValid = (inputLastName) => {
-const lastNameRegEx = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
-let lastNameErrorMsg = inputLastName.nextElementSibling;
+    const lastNameRegEx = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
+    let lastNameErrorMsg = inputLastName.nextElementSibling;
 
-if (lastNameRegEx.test(inputLastName.value)) {
-    lastNameErrorMsg.innerHTML = '';
-} else {
-    lastNameErrorMsg.innerHTML = 'Veuillez remplir ce champ correctement';
-    errorsArray.push('lastNameErrorMsg');
+    if (lastNameRegEx.test(inputLastName.value)) {
+        lastNameErrorMsg.innerHTML = '';
+    } else {
+        lastNameErrorMsg.innerHTML = 'Veuillez remplir ce champ correctement';
+        errorsArray.push('lastNameErrorMsg');
     }
 };
 
@@ -184,6 +186,7 @@ const emailValid = (inputEmail) => {
 
 function checkForm() {
     errorsArray.length = 0;
+
     firstNameValid(inputFirstName);
     lastNameValid(inputLastName);
     addressValid(inputAddress);
@@ -192,23 +195,23 @@ function checkForm() {
 }
 
 // Debut d'ecoute de modif du form
-allFormArray.forEach(el=>{
-    el.addEventListener('focus',() => checkForm());
-});
-form.addEventListener('keypress',() => checkForm());
+inputFirstName.addEventListener('change', () => firstNameValid(inputFirstName));
+inputLastName.addEventListener('change', () => lastNameValid(inputLastName));
+inputAddress.addEventListener('change', () => addressValid(inputAddress));
+inputCity.addEventListener('change', () => cityValid(inputCity));
+inputEmail.addEventListener('change', () => emailValid(inputEmail));
 //Fin d'ecoute de modif du form.
 
-const orderURL_page = 'confirmation.html';
-
 handleForm = () => {
-    allFormArray.forEach(el=>{
-        document.querySelector(`#${el.name}ErrorMsg`).textContent = "";
+    allFormArray.forEach((el) => {
+        document.querySelector(`#${el.name}ErrorMsg`).textContent = '';
     });
 
-    order.addEventListener('click', (e) => {
+    orderButton.addEventListener('click', (e) => {
         const isProductsInCart = (localStorage.getItem('product') || []).length;
         e.preventDefault();
         checkForm();
+
         const contact = {
             firstName: inputFirstName.value,
             lastName: inputLastName.value,
@@ -218,14 +221,27 @@ handleForm = () => {
         };
 
         //Ces conditions doivent être remplies avant que la commande ne soit acceptée.
-        if(!errorsArray.length > 0 && isProductsInCart && inputFirstName.value && inputLastName.value
-            && inputAddress.value && inputCity.value && inputEmail.value) {
+        if (
+            !errorsArray.length &&
+            isProductsInCart &&
+            inputFirstName.value &&
+            inputLastName.value &&
+            inputAddress.value &&
+            inputCity.value &&
+            inputEmail.value
+        ) {
             localStorage.setItem('contact', JSON.stringify(contact));
-            window.location.replace(orderURL_page);
+            window.location.replace(orderURLPage);
         }
     });
 };
+
 handleForm();
+
+
+
+
+
 
 
 
