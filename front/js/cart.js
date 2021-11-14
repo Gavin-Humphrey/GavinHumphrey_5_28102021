@@ -109,8 +109,6 @@ const handleQuantity = (newQuantity, idProductWithColor) => {
     displayCartContent();
 }
 
-  
-
 //Validation du formulaire 
 const orderURLPage = 'confirmation.html';
 const form = document.querySelector('.cart__order__form');
@@ -235,7 +233,6 @@ handleForm = () => {
         }
     });
 };
-
 handleForm();
 
 
