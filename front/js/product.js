@@ -1,4 +1,4 @@
-//Envoyer une requête pour récupérer les données(id) au format json
+//Envoyer une requête pour récupérer les données(id) au format json 
 const searchParams = new URLSearchParams(window.location.search);
 const id = searchParams.get("id");
 var url = new URL(window.location.href)
@@ -13,9 +13,8 @@ fetch('http://localhost:3000/api/products/'+id)
     printProduit(product);
 
   // Fonction pour afficher le  produit
+  // Insertion des information de la card du produit
   function printProduit(product) {
-
-    // Insertion des information de la card du produit
     const selectionProductImage = document.getElementById("productImage");
     selectionProductImage.innerHTML += `
     <img src="${product.imageUrl}" alt="${product.name}">`;
