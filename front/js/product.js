@@ -3,10 +3,9 @@ fetch('http://localhost:3000/api/products')
 .then(response => response.json())
 .then(data => console.log(data));
 
-// récupération de l'id
+// Récupération de l'id
 const searchParams = new URLSearchParams(window.location.search);
 const id = searchParams.get("id");
-//Just added
 var url = new URL(window.location.href)
 var productId = url.searchParams.get("id");
 let item = "";
@@ -18,10 +17,10 @@ fetch('http://localhost:3000/api/products/'+id)
      
     printProduit(product);
 
-  // fonction pour afficher le  produit
+  // Fonction pour afficher le  produit
   function printProduit(product) {
 
-    // insertion des information de la card du produit
+    // Insertion des information de la card du produit
     const selectionProductImage = document.getElementById("productImage");
     selectionProductImage.innerHTML += `
     <img src="${product.imageUrl}" alt="${product.name}">`;
@@ -41,7 +40,7 @@ fetch('http://localhost:3000/api/products/'+id)
     displayColors(product);
     }
    
- //cette fonction, parcour la liste de couleurs de ce produits et les affiches dans un element HTML de type <option> 
+ //Cette fonction, parcour la liste de couleurs de ce produits et les affiches dans un element HTML de type <option> 
     function displayColors(product) {
         const colorsChoice = document.getElementById("colors");
         for (let colors of product.colors) {
@@ -81,7 +80,7 @@ fetch('http://localhost:3000/api/products/'+id)
     //Initialiser le local storage
     let localStorageProduct = JSON.parse(localStorage.getItem("product"));
 
-    //boule d'ajouter au panier
+    //Popup d'ajouter au panier
     const popupConfirmation =() => {
         if(window.confirm(`Votre commande est ajoutée au panier. Cliquez sur OK pour le consulter`)){
             window.location.href ="cart.html";

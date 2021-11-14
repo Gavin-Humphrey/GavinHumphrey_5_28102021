@@ -121,7 +121,7 @@ const inputEmail = document.querySelector('#email');
 const allFormArray = [inputFirstName, inputLastName, inputAddress, inputCity, inputEmail];
 const errorsArray = [];
 
-// la vérification des données avec Regex.
+// La vérification des données avec Regex.
 const firstNameValid = (inputFirstName) => {
 const firstNameRegEx = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
 let firstNameErrorMsg = inputFirstName.nextElementSibling;

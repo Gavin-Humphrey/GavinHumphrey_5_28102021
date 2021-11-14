@@ -1,6 +1,5 @@
-const allProductsURL = 'http://localhost:3000/api/products'
-
 //Utilisé le GET pour afficher les produits sur la page d'accueil
+const allProductsURL = 'http://localhost:3000/api/products'
 fetch(allProductsURL).then(res => res.json()).then(res => {  
     const itemsSection = document.querySelector('#items');
     res.forEach((el) => {
