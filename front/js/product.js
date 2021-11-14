@@ -1,9 +1,4 @@
-//Envoyer une requête pour récupérer les données au format json
-fetch('http://localhost:3000/api/products')
-.then(response => response.json())
-.then(data => console.log(data));
-
-// Récupération de l'id
+//Envoyer une requête pour récupérer les données(id) au format json
 const searchParams = new URLSearchParams(window.location.search);
 const id = searchParams.get("id");
 var url = new URL(window.location.href)
