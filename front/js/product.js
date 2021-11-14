@@ -40,7 +40,7 @@ fetch('http://localhost:3000/api/products/'+id)
     displayColors(product);
     }
    
- //Cette fonction, parcour la liste de couleurs de ce produits et les affiches dans un element HTML de type <option> 
+ //Cette fonction, parcour la liste de couleurs de ces produits et les affiches dans un element HTML de type <option> 
     function displayColors(product) {
         const colorsChoice = document.getElementById("colors");
         for (let colors of product.colors) {
