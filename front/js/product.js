@@ -1,4 +1,5 @@
 //Envoyer une requête pour récupérer les données(id) au format json 
+/*Ici j'ai utilisé le searchParam pour récupérer l'ID du produit à afficher, qui est reçu au format json */
 const searchParams = new URLSearchParams(window.location.search);
 const id = searchParams.get("id");
 var url = new URL(window.location.href)
@@ -13,6 +14,7 @@ fetch('http://localhost:3000/api/products/'+id)
     printProduit(product);
 
   // Fonction pour afficher le  produit
+  /*Ici, j'ai utilisé getElementById et le fonction printProduit pour afficher le produit sélectionné, son titre et son prix sur la page du produit*/
   // Insertion des information de la card du produit
   function printProduit(product) {
     const selectionProductImage = document.getElementById("productImage");
